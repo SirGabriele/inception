@@ -11,3 +11,8 @@ exit
 docker stop containerName
 docket start containerName
 docker stats
+
+
+see --rm
+docker network create networkName
+--network networkName
