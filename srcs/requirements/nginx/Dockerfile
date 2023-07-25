@@ -1,8 +1,5 @@
 FROM debian:bullseye-slim 
 
-#Labels
-LABEL version=0.0.0.1
-
 ARG CREATED_USER=kbrousse
 
 #Directory
@@ -12,8 +9,8 @@ WORKDIR /app
 RUN apt-get update &&\
 	apt-get install nginx -y &&\
 	apt-get install openssl -y &&\
-	useradd ${CREATED_USER} &&\
 	mkdir /etc/nginx/ssl &&\
+	useradd ${CREATED_USER} &&\
 	apt-get clean
 
 COPY conf/nginx.conf /etc/nginx/
