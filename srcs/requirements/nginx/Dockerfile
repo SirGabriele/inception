@@ -3,7 +3,7 @@ FROM debian:bullseye-slim
 #Directory
 WORKDIR /app
 
-#Install requirements and create non-root user
+#Install requirements and create mandatory directories
 RUN apt-get update &&\
 	apt-get install nginx -y &&\
 	apt-get install openssl &&\
