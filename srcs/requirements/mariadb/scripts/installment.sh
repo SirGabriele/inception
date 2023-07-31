@@ -5,18 +5,27 @@ function info
 	echo -e "\e[0;92m[info] $1\e[0m"
 }
 
+#Starts mariadb service
 info "Starting mariadb ..."
 service mariadb start
 
+#Executes the securing script
 info "Securing databases ..."
 mysql_secure_installation << EOF
 
 y
 y
-password
-password
+$DB_ADMIN_PASSWD
+$DB_ADMIN_PASSWD
 y
 y
 y
 y
 EOF
+
+mariadb -e "create user if not exists $DB_ADMIN_NAME@localhost identified by '$DB_ADMIN_PASSWD'"
+mariadb -e "create database if not exists $DB_WORDPRESS_NAME"
+mariadb -e "grant all privileges on $DB_WORDPRESS_NAME.* to $DB_ADMIN_NAME@localhost"
+mariadb -e "flush privileges"
+
+#mariadb --bind-address=0.0.0.0

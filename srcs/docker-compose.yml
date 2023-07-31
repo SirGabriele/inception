@@ -1,19 +1,39 @@
 version: '3.5'
 
 services:
- nginx:
-  build: requirements/nginx
-  image: nginx:final
+# nginx:
+#  build: requirements/nginx
+#  image: nginx:final
+#  ports:
+#  - 443:443
+#  networks:
+#  - my_network
+
+ mariadb:
+  build: requirements/mariadb
+  image: mymariadb:test
   ports:
-  - 443:443
+  - 3306:3306
   networks:
   - my_network
+  env_file:
+  - .env
+#  volumes:
+#  - /home/kbrousse/data:/database
 
 networks:
  my_network:
   name: my_network
   driver: bridge
 
+#volumes:
+# mariadb:
+#  name: my_maradb_volume
+#  driver: local
+#  driver_opts:
+#   type: 'none'
+#   o: 'bind'
+#   device: '/home/kbrousse/data'
 
 #essayer de ping d'un container a l'autre pour voir si le reseau fonctionne correctement
 #install iputils-ping

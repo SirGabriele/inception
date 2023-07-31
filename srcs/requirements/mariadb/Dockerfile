@@ -14,4 +14,5 @@ COPY ./scripts/installment.sh /usr/bin/
 EXPOSE 3306/tcp
 
 #ENTRYPOINT ["/usr/bin/installment.sh"]
+
 CMD ["sleep", "infinity"]

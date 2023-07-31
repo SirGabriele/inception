@@ -3,7 +3,7 @@ all: up
 up:
 	sudo mkdir -p /home/kbrousse/data/mysql
 	sudo mkdir -p /homekbrousse/data/wordpress
-	docker-compose -f ./srcs/docker-compose.yml up -d
+	docker-compose -f ./srcs/docker-compose.yml up -d --build
 
 down:
 	docker-compose -f ./srcs/docker-compose.yml down
