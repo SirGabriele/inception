@@ -18,8 +18,8 @@ services:
   - my_network
   env_file:
   - .env
-#  volumes:
-#  - /home/kbrousse/data:/database
+  volumes:
+  - /home/kbrousse/data:/database
 
 networks:
  my_network:

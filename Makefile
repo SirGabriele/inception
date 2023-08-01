@@ -17,7 +17,10 @@ stop:
 restart:
 	docker-compose -f ./srcs/docker-compose.yml restart
 
+clean:
+	docker rmi $$(docker images -f "dangling=true" -q)
+
 fclean:
 	docker system prune --volumes -af
 
-.PHONY: all up down start stop restart fclean
+.PHONY: all up down start stop restart fclean clean

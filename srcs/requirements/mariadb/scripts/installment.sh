@@ -15,8 +15,8 @@ mysql_secure_installation << EOF
 
 y
 y
-$DB_ADMIN_PASSWD
-$DB_ADMIN_PASSWD
+$DB_ROOT_PASSWD
+$DB_ROOT_PASSWD
 y
 y
 y
@@ -27,5 +27,11 @@ mariadb -e "create user if not exists $DB_ADMIN_NAME@localhost identified by '$D
 mariadb -e "create database if not exists $DB_WORDPRESS_NAME"
 mariadb -e "grant all privileges on $DB_WORDPRESS_NAME.* to $DB_ADMIN_NAME@localhost"
 mariadb -e "flush privileges"
+#mariadb -u$DB_ADMIN_NAME -p$DB_ADMIN_PASSWD $DB_WORDPRESS_NAME
 
-#mariadb --bind-address=0.0.0.0
+sleep 2
+info "Stopping mariadb ..."
+service mariadb stop
+
+info "Listening ..."
+mariadbd --bind-address=0.0.0.0
