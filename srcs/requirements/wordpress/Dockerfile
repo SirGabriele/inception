@@ -6,6 +6,7 @@ WORKDIR /app
 #Install requirements
 RUN apt-get update &&\
 	apt-get install wget -y &&\
+	apt-get install php7.4-fpm -y &&\
 	apt-get clean
 
 COPY ./scripts/installment.sh /usr/bin/

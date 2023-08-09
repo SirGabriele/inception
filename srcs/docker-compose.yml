@@ -1,25 +1,17 @@
 version: '3.5'
 
 services:
-# nginx:
-#  build: requirements/nginx
-#  image: nginx:final
-#  ports:
-#  - 443:443
-#  networks:
-#  - my_network
-
-# mariadb:
-#  build: requirements/mariadb
-#  image: mymariadb:final
-#  ports:
-#  - 3306:3306
-#  networks:
-#  - my_network
-#  env_file:
-#  - .env
-#  volumes:
-#  - /home/kbrousse/data:/database
+ mariadb:
+  build: requirements/mariadb
+  image: mymariadb:final
+  ports:
+  - 3306:3306
+  networks:
+  - my_network
+  env_file:
+  - .env
+  volumes:
+  - mariadb:/var/lib/mysql
 
  wordpress:
   build: requirements/wordpress
@@ -31,30 +23,44 @@ services:
   env_file:
   - .env
   volumes:
-  - /home/kbrousse/wordpress:/var/www/wordpress
+  - wordpress:/var/www/wordpress
+  depends_on:
+  - mariadb
+
+ nginx:
+  build: requirements/nginx
+  image: nginx:final
+  ports:
+  - 443:443
+  networks:
+  - my_network
+  volumes:
+  - wordpress:/var/www/wordpress
+  depends_on:
+  - wordpress
 
 networks:
  my_network:
   name: my_network
   driver: bridge
 
-#volumes:
-# mariadb:
-#  name: my_maradb_volume
-#  driver: local
-#  driver_opts:
-#   type: 'none'
-#   o: 'bind'
-#   device: '/home/kbrousse/data'
-
 volumes:
+ mariadb:
+  name: my_mariadb_volume
+  driver: local
+  driver_opts:
+   type: 'none'
+   o: 'bind'
+   device: '/home/kbrousse/data/mysql'
+
  wordpress:
   name: my_wordpress_volume
   driver: local
   driver_opts:
    type : 'none'
    o: 'bind'
-   device: '/home/kbrousse/wordpress'
+   device: '/home/kbrousse/data/wordpress'
 
 #essayer de ping d'un container a l'autre pour voir si le reseau fonctionne correctement
 #install iputils-ping
+#proteger les scripts en faisait des if -d dir au debut
