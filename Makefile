@@ -12,8 +12,8 @@ up:
 
 down:
 	docker-compose -f ./srcs/docker-compose.yml down
-	docker volume rm $(VOLUME_NAMES) #A VIRER--------------------------------------------------------------------------------
-	sudo rm -rf $(VOLUME_DIR) #A VIRER--------------------------------------------------------------------------------
+	#docker volume rm $(VOLUME_NAMES) #A VIRER--------------------------------------------------------------------------------
+	#sudo rm -rf $(VOLUME_DIR) #A VIRER--------------------------------------------------------------------------------
 
 start:
 	docker-compose -f ./srcs/docker-compose.yml start
