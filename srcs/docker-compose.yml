@@ -9,17 +9,29 @@ services:
 #  networks:
 #  - my_network
 
- mariadb:
-  build: requirements/mariadb
-  image: mymariadb:test
+# mariadb:
+#  build: requirements/mariadb
+#  image: mymariadb:final
+#  ports:
+#  - 3306:3306
+#  networks:
+#  - my_network
+#  env_file:
+#  - .env
+#  volumes:
+#  - /home/kbrousse/data:/database
+
+ wordpress:
+  build: requirements/wordpress
+  image: wordpress:test
   ports:
-  - 3306:3306
+  - 9000:9000
   networks:
   - my_network
   env_file:
   - .env
   volumes:
-  - /home/kbrousse/data:/database
+  - /home/kbrousse/wordpress:/var/www/wordpress
 
 networks:
  my_network:
@@ -34,6 +46,15 @@ networks:
 #   type: 'none'
 #   o: 'bind'
 #   device: '/home/kbrousse/data'
+
+volumes:
+ wordpress:
+  name: my_wordpress_volume
+  driver: local
+  driver_opts:
+   type : 'none'
+   o: 'bind'
+   device: '/home/kbrousse/wordpress'
 
 #essayer de ping d'un container a l'autre pour voir si le reseau fonctionne correctement
 #install iputils-ping
