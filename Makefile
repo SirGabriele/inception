@@ -8,19 +8,19 @@ all: up
 up:
 	sudo mkdir -p $(VOLUME_DIR)/mysql
 	sudo mkdir -p $(VOLUME_DIR)/wordpress
-	docker-compose -f ./srcs/docker-compose.yml up -d --build
+	docker compose -f ./srcs/docker-compose.yml up -d --build
 
 down:
-	docker-compose -f ./srcs/docker-compose.yml down
+	docker compose -f ./srcs/docker-compose.yml down
 
 start:
-	docker-compose -f ./srcs/docker-compose.yml start
+	docker compose -f ./srcs/docker-compose.yml start
 
 stop:
-	docker-compose -f ./srcs/docker-compose.yml stop
+	docker compose -f ./srcs/docker-compose.yml stop
 
 restart:
-	docker-compose -f ./srcs/docker-compose.yml restart
+	docker compose -f ./srcs/docker-compose.yml restart
 
 reload: down rmvolumes up clean
 
@@ -30,7 +30,9 @@ rmvolumes:
 	fi
 
 clean:
-	docker rmi $$(docker images -f "dangling=true" -q)
+	@if docker images | grep -q none; then \
+		docker rmi $$(docker images -f "dangling=true" -q) && echo "Removing the dangling images ..."; \
+	fi
 
 fclean: rmvolumes
 	docker system prune --volumes -af

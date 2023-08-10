@@ -5,22 +5,22 @@ function info
 	echo -e "\e[0;92m[info] $1\e[0m"
 }
 
-#Download the latest version of wordpress
+#Download the latest version of wordpress and set it up
 if [ -d /var/www/wordpress ] && [ "$(ls -A /var/www/wordpress)" ];
 then
 	info "Wordpress is already installed"
 else
 	info "Installing wordpress ..."
-	wget https://fr.wordpress.org/latest-fr_FR.tar.gz -P /var/www
-	tar xf /var/www/latest-fr_FR.tar.gz -C /var/www
-	rm /var/www/latest-fr_FR.tar.gz
+	wget https://wordpress.org/latest.tar.gz -P /var/www
+	tar xf /var/www/latest.tar.gz -C /var/www
+	rm /var/www/latest.tar.gz
 	mv /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php
 	chown -R www-data:www-data /var/www/wordpress
 	chmod -R 755 /var/www/wordpress
-	sed -i -e "s/votre_nom_de_bdd/${DB_NAME}/g" \
-		-e "s/votre_utilisateur_de_bdd/${DB_NAME}/g" \
-		-e "s/votre_mdp_de_bdd/${DB_PASSWD}/g" \
-		-e "s/localhost/${DB_HOST}/g" /var/www/wordpress/wp-config.php
+	sed -i -e "s/database_name_here/${DB_NAME}/g" \
+		-e "s/username_here/${DB_USERNAME}/g" \
+		-e "s/password_here/${DB_PASSWD}/g" \
+		-e "s/localhost/${DB_HOSTNAME}/g" /var/www/wordpress/wp-config.php
 	sleep 3
 fi
 
@@ -35,7 +35,7 @@ else
 fi
 
 #Download wp-cli
-if [ -d wp-cli.phar ];
+if [ -f /usr/bin/wp-cli.phar ];
 then
 	info "wp-cli.phar is already installed"
 else
@@ -45,10 +45,10 @@ else
 	mv wp-cli.phar /usr/bin/
 fi
 
-#Launch php7.4
-#if [[ $(ps -aux | grep php) ]];
-#then
-#	info "/usr/sbin/php-fpm7.4 is already running"
-#else
-	/usr/sbin/php-fpm7.4 -F -R
-#fi
+#Launch php-fpm7.4
+if [[ $(/usr/sbin/php-fpm7.4 -F -R 2>/dev/null) ]];
+then
+	:
+else
+	info "/usr/sbin/php-fpm7.4 is already running"
+fi
