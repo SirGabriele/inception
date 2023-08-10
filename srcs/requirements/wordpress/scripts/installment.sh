@@ -10,6 +10,7 @@ if [ -d /var/www/wordpress ] && [ "$(ls -A /var/www/wordpress)" ];
 then
 	info "Wordpress is already installed"
 else
+	sleep 10
 	info "Installing wordpress ..."
 	wget https://wordpress.org/latest.tar.gz -P /var/www
 	tar xf /var/www/latest.tar.gz -C /var/www
@@ -18,10 +19,10 @@ else
 	chown -R www-data:www-data /var/www/wordpress
 	chmod -R 755 /var/www/wordpress
 	sed -i -e "s/database_name_here/${DB_NAME}/g" \
-		-e "s/username_here/${DB_USERNAME}/g" \
-		-e "s/password_here/${DB_PASSWD}/g" \
+		-e "s/username_here/${DB_ADMIN_NAME}/g" \
+		-e "s/password_here/${DB_ADMIN_PASSWD}/g" \
 		-e "s/localhost/${DB_HOSTNAME}/g" /var/www/wordpress/wp-config.php
-	sleep 3
+	sleep 10
 fi
 
 #Start the php-fpm service
@@ -35,14 +36,15 @@ else
 fi
 
 #Download wp-cli
-if [ -f /usr/bin/wp-cli.phar ];
+if [ -f /usr/bin/wp ];
 then
 	info "wp-cli.phar is already installed"
 else
 	info "Installing wp-cli.phar ..."
 	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 	chmod +x wp-cli.phar
-	mv wp-cli.phar /usr/bin/
+	mv wp-cli.phar /usr/bin/wp
+	sleep 10
 fi
 
 #Launch php-fpm7.4

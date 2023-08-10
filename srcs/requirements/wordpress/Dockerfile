@@ -7,6 +7,7 @@ WORKDIR /app
 RUN apt-get update &&\
 	apt-get install wget -y &&\
 	apt-get install php -y &&\
+	apt-get install php-mysql -y &&\
 	apt-get install php7.4-fpm -y &&\
 	apt-get clean
 

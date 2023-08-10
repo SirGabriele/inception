@@ -9,6 +9,8 @@ function info
 info "Starting mariadb ..."
 service mariadb start
 
+sleep 10
+
 #Executes the securing script
 info "Securing databases ..."
 mysql_secure_installation << EOF
@@ -29,9 +31,12 @@ mariadb -e "grant all privileges on $DB_NAME.* to $DB_ADMIN_NAME@localhost"
 mariadb -e "flush privileges"
 #mariadb -u$DB_ADMIN_NAME -p$DB_ADMIN_PASSWD $DB_NAME
 
-sleep 2
+sleep 3
+
 info "Stopping mariadb ..."
 service mariadb stop
+
+sleep 10
 
 info "Listening ..."
 mariadbd --bind-address=0.0.0.0
