@@ -6,7 +6,7 @@ WORKDIR /app
 #Install requirements
 RUN apt-get update &&\
 	apt-get install wget -y &&\
-	apt-get install php -y &&\
+#	apt-get install php -y &&\
 	apt-get install php7.4-fpm -y &&\
 	apt-get clean
 
@@ -20,3 +20,5 @@ EXPOSE 9000/tcp
 ENTRYPOINT ["/usr/bin/installment.sh"]
 
 #CMD ["sleep", "infinity"]
+
+#installer php-mysql

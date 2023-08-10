@@ -12,8 +12,6 @@ up:
 
 down:
 	docker-compose -f ./srcs/docker-compose.yml down
-	#docker volume rm $(VOLUME_NAMES) #A VIRER--------------------------------------------------------------------------------
-	#sudo rm -rf $(VOLUME_DIR) #A VIRER--------------------------------------------------------------------------------
 
 start:
 	docker-compose -f ./srcs/docker-compose.yml start
@@ -23,6 +21,8 @@ stop:
 
 restart:
 	docker-compose -f ./srcs/docker-compose.yml restart
+
+reload: down rmvolumes up clean
 
 rmvolumes:
 	@if [ -d $(VOLUME_DIR) ]; then \
@@ -37,4 +37,4 @@ fclean: rmvolumes
 	docker volume rm $(VOLUME_NAMES)
 	sudo rm -rf $(VOLUME_DIR)
 
-.PHONY: all up down start stop restart rmvolumes fclean clean
+.PHONY: all up down start stop restart rmvolumes fclean clean reload
