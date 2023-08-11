@@ -5,7 +5,7 @@ services:
   build: requirements/mariadb
   image: mymariadb:final
   ports:
-  - 3306:3306
+   - 3306:3306
   networks:
   - my_network
   env_file:
@@ -18,7 +18,7 @@ services:
   build: requirements/wordpress
   image: wordpress:test
   ports:
-  - 9000:9000
+   - 9000:9000
   networks:
   - my_network
   env_file:

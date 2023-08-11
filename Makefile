@@ -34,9 +34,8 @@ clean:
 		docker rmi $$(docker images -f "dangling=true" -q) && echo "Removing the dangling images ..."; \
 	fi
 
-fclean: rmvolumes
+fclean: clean down rmvolumes
 	docker system prune --volumes -af
-	docker volume rm $(VOLUME_NAMES)
-	sudo rm -rf $(VOLUME_DIR)
+	docker volume rm $$(docker volume ls -q)
 
 .PHONY: all up down start stop restart rmvolumes fclean clean reload

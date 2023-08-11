@@ -9,6 +9,7 @@ RUN apt-get update &&\
 	apt-get install php -y &&\
 	apt-get install php-mysql -y &&\
 	apt-get install php7.4-fpm -y &&\
+	apt-get install mariadb-client -y &&\
 	apt-get clean
 
 COPY ./scripts/installment.sh /usr/bin/
