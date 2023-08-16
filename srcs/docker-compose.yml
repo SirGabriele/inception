@@ -59,7 +59,3 @@ volumes:
    type : 'none'
    o: 'bind'
    device: '/home/kbrousse/data/wordpress'
-
-#essayer de ping d'un container a l'autre pour voir si le reseau fonctionne correctement
-#install iputils-ping
-#proteger les scripts en faisait des if -d dir au debut

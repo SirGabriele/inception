@@ -25,5 +25,5 @@ mariadb -u$DB_ADMIN_NAME -p$DB_ADMIN_PASSWD $DB_NAME
 
 sleep 3
 
-#info "Listening ..."
+info "Listening ..."
 mariadbd --bind-address=0.0.0.0
