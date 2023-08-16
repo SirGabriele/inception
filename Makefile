@@ -1,8 +1,5 @@
 VOLUME_DIR =	/home/kbrousse/data
 
-VOLUME_NAMES =	my_mariadb_volume	\
-				my_wordpress_volume
-
 all: up
 	
 up:
@@ -22,8 +19,6 @@ stop:
 restart:
 	docker compose -f ./srcs/docker-compose.yml restart
 
-reload: down rmvolumes up clean
-
 rmvolumes:
 	@if [ -d $(VOLUME_DIR) ]; then \
 		sudo rm -rf $(VOLUME_DIR); \
@@ -38,4 +33,4 @@ fclean: clean down rmvolumes
 	docker system prune --volumes -af
 	docker volume rm $$(docker volume ls -q)
 
-.PHONY: all up down start stop restart rmvolumes fclean clean reload
+.PHONY: all up down start stop restart rmvolumes fclean clean

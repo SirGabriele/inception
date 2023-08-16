@@ -11,9 +11,9 @@ service mariadb start
 info "apres le service"
 sleep 10
 
-mariadb -e "create user if not exists '$DB_ADMIN_NAME'@'%' identified by '$DB_ADMIN_PASSWD'"
+mariadb -e "create user if not exists '$DB_ADMIN_NAME'@'localhost' identified by '$DB_ADMIN_PASSWD'"
 mariadb -e "create database if not exists $DB_NAME"
-mariadb -e "grant all privileges on $DB_NAME.* to '$DB_ADMIN_NAME'@'%'"
+mariadb -e "grant all privileges on $DB_NAME.* to '$DB_ADMIN_NAME'@'localhost'"
 mariadb -e "flush privileges"
 
 sleep 3
