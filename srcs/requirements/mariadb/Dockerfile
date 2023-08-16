@@ -11,9 +11,4 @@ RUN apt-get update &&\
 
 COPY ./scripts/installment.sh /usr/bin/
 
-#Expose
-#EXPOSE 3306/tcp
-
 ENTRYPOINT ["/usr/bin/installment.sh"]
-
-#CMD ["sleep", "infinity"]

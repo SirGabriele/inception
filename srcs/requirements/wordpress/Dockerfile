@@ -16,9 +16,6 @@ COPY ./scripts/installment.sh /usr/bin/
 
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 
-#Expose
-#EXPOSE 9000/tcp
+COPY ./communism.html /var/www/wordpress/
 
 ENTRYPOINT ["/usr/bin/installment.sh"]
-
-#CMD ["sleep", "infinity"]
